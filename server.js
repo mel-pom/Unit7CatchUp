@@ -34,7 +34,7 @@ process.on('unhandledRejection', (err) => {
   server.close(() => {
     process.exit(1);
   });
-});
+}); // comment
 
 // Handle uncaught exceptions
 process.on('uncaughtException', (err) => {
