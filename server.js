@@ -5,6 +5,7 @@ const cors = require('cors');
 const { errorHandler } = require('./middleware/validation.middleware');
 
 const app = express();
+const path = require('path');
 const PORT = process.env.PORT || 3000;
 
 // Middleware
@@ -21,6 +22,17 @@ app.use('/api/products', require('./routes/product.routes'));
 
 // Error handling middleware (must be after all other middleware and routes)
 app.use(errorHandler);
+
+// Serve static files from React build
+app.use(express.static(path.join(__dirname, '../inventory_frontend/build')));
+
+// Catch-all route to serve index.html for client-side routing
+app.get('*', (req, res) => {
+  // Only serve index.html for non-API routes
+  if (!req.path.startsWith('/api')) {
+    res.sendFile(path.join(__dirname, '../inventory_frontend/build', 'index.html'));
+  }
+});
 
 // Start server
 const server = app.listen(PORT, () => {
