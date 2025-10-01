@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Product = require("./models/product.model");
 // MongoDB connection
+const dotenv = require("dotenv")
+dotenv.config()
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => console.log("✅ MongoDB connected"))
